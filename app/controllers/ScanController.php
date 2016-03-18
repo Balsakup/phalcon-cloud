@@ -12,11 +12,11 @@ class ScanController extends ControllerBase {
 
 		$diskName = $disk->getNom();
 
-        $lg = $this->jquery->bootstrap()->htmlListGroup('qcath-lg-2', array( 'Caractéristiques du disque' ));
+        $lg = $this->jquery->bootstrap()->htmlListGroup('lg-2', array( 'Caractéristiques du disque' ));
         $lg->getItem(0)->setDisabled();
 
         $nom       = '<b>Nom: </b>' . $disk->getNom();
-        $element   = $this->jquery->bootstrap()->htmlGlyphButton('qcath-btnEdit', 70, 'Modifier...');
+        $element   = $this->jquery->bootstrap()->htmlGlyphButton('btnEdit', 70, 'Modifier...');
 
         $lg->addItem($nom . ' ' . $element);
 
@@ -55,7 +55,7 @@ class ScanController extends ControllerBase {
 
         $nom   = '<b>Tarification: </b>';
         $value = 'Prix: ' . $tarif->getPrix() .'€, Marge de dépassement: ' . $tarif->getMargeDepassement() * 100 . '%, Coût de dépassement: ' . $tarif->getCoutDepassement() . '€';
-        $element   = $this->jquery->bootstrap()->htmlGlyphButton('qcath-btnTarif', 70, 'Modifier la tarification...');
+        $element   = $this->jquery->bootstrap()->htmlGlyphButton('btnTarif', 70, 'Modifier la tarification...');
 
         $lg->addItem($nom . '<br>' . $value . '<br>' . $element);
 
@@ -64,12 +64,12 @@ class ScanController extends ControllerBase {
         $element  = '';
 
         foreach ($services as $service) {
-            $element .= new \Ajax\bootstrap\html\HtmlLabel('qcath-ls-' . $service->getId(), $service->getNom(), 'label-success') . '&nbsp;';
+            $element .= new \Ajax\bootstrap\html\HtmlLabel('ls-' . $service->getId(), $service->getNom(), 'label-success') . '&nbsp;';
         }
 
         $lg->addItem($element);
 
-        $btnClose = $this->jquery->bootstrap()->htmlGlyphButton('qcath-btnClose', 119, 'Fermer et retourner à <b>Mes disques</b>');
+        $btnClose = $this->jquery->bootstrap()->htmlGlyphButton('btnClosr', 119, 'Fermer et retourner à <b>Mes disques</b>');
         $btnClose->setStyle('primary btn-block');
         $btnClose->getOnClick('MyDisques/index', '#content');
 

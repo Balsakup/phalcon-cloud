@@ -46,7 +46,6 @@
 							<div class="form-group">
 								<input type="hidden" name="activeFolder" id="parentFolder">
 								<label>Nom : <input type="text" class="form-control" placeholder="nom du dossier..." name="folderName" id="folderName"/></label>
-                                <script>console.log('J\'appartiens à Quentin CATHERINE, SCRIPT ANTI-CHEAT');</script>
 								<a class="btn btn-primary" id="btCreateFolder">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									Créer le dossier
