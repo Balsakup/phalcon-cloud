@@ -18,7 +18,7 @@ class ModelUtils {
 	 */
 	public static function getDisqueTarif($disque){
 		//TODO 4.1
-		return null;
+		return $disque->DisqueTarifs[0]->Tarif;
 	}
 
 	/**

@@ -8,7 +8,9 @@ class ScanController extends ControllerBase {
 	 */
 	public function indexAction($idDisque) {
 		//TODO 4.3
-		$diskName="nom du disque.......................";
+		$disk = Disque::findFirst(explode('-', $idDisque)[1]);
+
+		$diskName = $disk->getNom();
 
 
 		$this->jquery->execOn("click", "#ckSelectAll", "$('.toDelete').prop('checked', $(this).prop('checked'));$('#btDelete').toggle($('.toDelete:checked').length>0)");
