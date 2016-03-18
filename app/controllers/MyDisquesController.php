@@ -23,7 +23,7 @@ class MyDisquesController extends \ControllerBase {
                 $tarif      = ModelUtils::getDisqueTarif($disk);
                 $occupation = round($disk->Historiques[0]->getOccupation() / ModelUtils::sizeConverter($tarif->getUnite()), 2);
                 $total      = $tarif->getQuota();
-                $perCent    = $occupation / $total * 100;
+                $perCent    = round($occupation / $total * 100, 2);
                 $element    = new \Ajax\bootstrap\html\base\HtmlDoubleElement("p-1");
 
                 $element->setContent($disk->getNom());
@@ -32,6 +32,7 @@ class MyDisquesController extends \ControllerBase {
                 $progress   = $this->jquery->bootstrap()->htmlProgressbar('pb-' . $disk->getId(), 'success', $perCent);
                 $progress->setStriped(true)->setActive(true);
                 $progress->setStyleLimits(array( 'progress-bar-info' => 10, 'progress-bar-success' => 50, 'progress-bar-warning' => 80, 'progress-bar-danger' => 100 ));
+                $progress->showCaption(true);
 
                 $openBtn     = $this->jquery->bootstrap()->htmlGlyphButton($disk->getId(), 120, 'Ouvrir');
                 $openBtn->setStyle('primary btn-block');
