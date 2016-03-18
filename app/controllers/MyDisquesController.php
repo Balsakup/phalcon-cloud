@@ -33,7 +33,7 @@ class MyDisquesController extends \ControllerBase {
                 $progress->setStriped(true)->setActive(true);
                 $progress->setStyleLimits(array( 'progress-bar-info' => 10, 'progress-bar-success' => 50, 'progress-bar-warning' => 80, 'progress-bar-danger' => 100 ));
 
-                $openBtn     = $this->jquery->bootstrap()->htmlGlyphButton('disk-' . $disk->getId(), 120, 'Ouvrir');
+                $openBtn     = $this->jquery->bootstrap()->htmlGlyphButton($disk->getId(), 120, 'Ouvrir');
                 $openBtn->setStyle('primary btn-block');
                 $openBtn->getOnClick('scan/index', '#content');
 

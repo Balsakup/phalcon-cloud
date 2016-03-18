@@ -10,6 +10,9 @@
 				<!--
 				//TODO 4.3 implémenter à partir de DisqueController/indexAction
 				-->
+				<?php echo $lg; ?>
+                <?php echo $btnClose; ?>
+                <br>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="Listing">
 				<div class="btn-toolbar">

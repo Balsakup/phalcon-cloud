@@ -8,10 +8,70 @@ class ScanController extends ControllerBase {
 	 */
 	public function indexAction($idDisque) {
 		//TODO 4.3
-		$disk = Disque::findFirst(explode('-', $idDisque)[1]);
+		$disk = Disque::findFirst($idDisque);
 
 		$diskName = $disk->getNom();
 
+        $lg = $this->jquery->bootstrap()->htmlListGroup('lg-2', array( 'Caractéristiques du disque' ));
+        $lg->getItem(0)->setDisabled();
+
+        $nom       = '<b>Nom: </b>' . $disk->getNom();
+        $element   = $this->jquery->bootstrap()->htmlGlyphButton('btnEdit', 70, 'Modifier...');
+
+        $lg->addItem($nom . ' ' . $element);
+
+        $nom       = '<b>Propiétaire: </b>' . $disk->Utilisateur;
+
+        $lg->addItem($nom);
+
+        $tarif      = ModelUtils::getDisqueTarif($disk);
+        $occupation = round($disk->Historiques[0]->getOccupation() / ModelUtils::sizeConverter($tarif->getUnite()), 2);
+        $total      = $tarif->getQuota();
+        $perCent    = round($occupation / $total * 100, 2);
+
+        $nom        = '<b>Occupation: </b>';
+        $occupation = $occupation . ' / ' . $total . ' ' . $tarif->getUnite() . ' (' . $perCent . '%)';
+
+        $type       = 'info';
+        $value      = 'Peu occupé';
+
+        if ($perCent > 10) {
+            $type  = 'success';
+            $value = 'RAS';
+        }
+        if ($perCent > 50) {
+            $type  = 'warning';
+            $value = 'Forte occupation';
+        }
+        if ($perCent > 80) {
+            $type  = 'danger';
+            $value = 'Proche saturation';
+        }
+        $element    = new \Ajax\bootstrap\html\HtmlLabel('l-1', $value, "label-$type");
+        $element->setStyle($type);
+        $element->setContent($value);
+
+        $lg->addItem($nom . $occupation . '<br>' . $element);
+
+        $nom   = '<b>Tarification: </b>';
+        $value = 'Prix: ' . $tarif->getPrix() .'€, Marge de dépassement: ' . $tarif->getMargeDepassement() * 100 . '%, Coût de dépassement: ' . $tarif->getCoutDepassement() . '€';
+        $element   = $this->jquery->bootstrap()->htmlGlyphButton('btnTarif', 70, 'Modifier la tarification...');
+
+        $lg->addItem($nom . '<br>' . $value . '<br>' . $element);
+
+        $nom   = '<b>Services: </b>';
+        $services = $disk->Services;
+        $element  = '';
+
+        foreach ($services as $service) {
+            $element .= new \Ajax\bootstrap\html\HtmlLabel('ls-' . $service->getId(), $service->getNom(), 'label-success') . '&nbsp;';
+        }
+
+        $lg->addItem($element);
+
+        $btnClose = $this->jquery->bootstrap()->htmlGlyphButton('btnClosr', 119, 'Fermer et retourner à <b>Mes disques</b>');
+        $btnClose->setStyle('primary btn-block');
+        $btnClose->getOnClick('MyDisques/index', '#content');
 
 		$this->jquery->execOn("click", "#ckSelectAll", "$('.toDelete').prop('checked', $(this).prop('checked'));$('#btDelete').toggle($('.toDelete:checked').length>0)");
 		$this->jquery->execOn("click","#btUpload","$('#tabsMenu a:last').tab('show');");
@@ -20,6 +80,8 @@ class ScanController extends ControllerBase {
 		$this->jquery->doJQueryOn("click", "#btFrmCreateFolder", "#panelCreateFolder", "toggle");
 		$this->jquery->postFormOn("click", "#btCreateFolder", "Scan/createFolder", "frmCreateFolder","#ajaxResponse");
 		$this->jquery->exec("window.location.hash='';scan('".$diskName."')",true);
+
+        $this->view->setVars(compact('lg', 'btnClose'));
 
 		$this->jquery->compile($this->view);
 	}

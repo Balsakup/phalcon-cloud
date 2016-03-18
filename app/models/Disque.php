@@ -98,6 +98,7 @@ class Disque extends \Phalcon\Mvc\Model
     public function initialize()
     {
     	// TODO 4.3 recherche des services avec hasManyToMany
+        $this->hasManyToMany('id', 'DisqueService', 'idDisque', 'idService', 'Service', 'id', array('alias' => 'Services'));
         $this->hasMany('id', 'DisqueTarif', 'idDisque', array('alias' => 'DisqueTarifs'));
         $this->hasMany('id', 'Historique', 'idDisque', array('alias' => 'Historiques'));
         $this->belongsTo('idUtilisateur', 'Utilisateur', 'id', array('alias' => 'Utilisateur'));
