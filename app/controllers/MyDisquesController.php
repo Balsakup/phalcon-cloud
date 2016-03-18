@@ -10,8 +10,8 @@ class MyDisquesController extends \ControllerBase {
         $user = Auth::getUser($this);
 
         if ($user) {
-            $addDisk = $this->jquery->bootstrap()->htmlGlyphButton('btnAdd', 86, 'Ajouter un disque', CssRef::CSS_PRIMARY);
-            $lg      = $this->jquery->bootstrap()->htmlListGroup('lg');
+            $addDisk = $this->jquery->bootstrap()->htmlGlyphButton('qcath-btnAdd', 86, 'Ajouter un disque', CssRef::CSS_PRIMARY);
+            $lg      = $this->jquery->bootstrap()->htmlListGroup('qcath-lg');
             $disks   = Disque::find(array(
                 'conditions' => 'idUtilisateur = ' . $user->getId()
             ));
@@ -29,7 +29,7 @@ class MyDisquesController extends \ControllerBase {
                 $element->setContent($disk->getNom());
                 $element->addLabel($occupation . ' / ' . $total . ' ' . $tarif->getUnite());
 
-                $progress   = $this->jquery->bootstrap()->htmlProgressbar('pb-' . $disk->getId(), 'success', $perCent);
+                $progress   = $this->jquery->bootstrap()->htmlProgressbar('qcath-pb-' . $disk->getId(), 'success', $perCent);
                 $progress->setStriped(true)->setActive(true);
                 $progress->setStyleLimits(array( 'progress-bar-info' => 10, 'progress-bar-success' => 50, 'progress-bar-warning' => 80, 'progress-bar-danger' => 100 ));
 
